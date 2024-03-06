@@ -1,0 +1,16 @@
+{
+  "name": "ai_chatweb",
+  "version": "1.0.0",
+  "description": "Website To Chat With AI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@google/generative-ai": "^0.2.1"
+  }
+}
