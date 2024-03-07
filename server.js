@@ -22,6 +22,7 @@ app.get('/', async (req, res) => {
 app.post('/', async (req, res) => {
     try {
       const model = genAI.getGenerativeModel({model: "gemini-pro"});
+
       const req_history = req.body.history;
       const msg = req.body.message;
       if(msg == null){
@@ -35,11 +36,14 @@ app.post('/', async (req, res) => {
         res.status(200).send({message: text});
         return;
       }
+      console.log("this is a continuation of a conversation: ")
+      // print out the history
+        console.log("history: ");
+        for(var i = 0; i < req_history.length; i++){
+          console.log(req_history[i].role + ": " + req_history[i].parts);
+        }
       const chat = model.startChat({
-        history: req_history,
-        generationConfig: {
-          maxOutputTokens: 100,
-        },
+        history: req_history
       });
       const result = await chat.sendMessage(msg);
       const response = await result.response;
@@ -47,7 +51,7 @@ app.post('/', async (req, res) => {
       (text != "") ? res.status(200).send({message: text}): res.status(200).send({message: "No response found"});
     } catch(error) {
         console.log("error = "+ error);
-        res.status(500).send({message: "Internal Server Error"})
+        res.status(500).send({message: "Có lỗi rùi bạn ơi, F5 lại thử xem sao nào!"})
     }
 })
 
